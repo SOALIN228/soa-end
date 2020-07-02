@@ -7,7 +7,9 @@ class PublicController {
       size: 6,
       ignoreChars: '0Oo1il',
       color: true,
-      noise: Math.floor(Math.random() * 5)
+      noise: Math.floor(Math.random() * 5),
+      width: 150,
+      height: 38,
     })
     ctx.body = {
       code: 200,
