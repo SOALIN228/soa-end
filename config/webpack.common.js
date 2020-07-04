@@ -13,6 +13,9 @@ const webpackConfig = {
     filename: '[name].bundle.js',
     path: utils.DIST_PATH
   },
+  resolve: {
+    ...utils.getWebpackResolveConfig(),
+  },
   module: {
     rules: [
       {
