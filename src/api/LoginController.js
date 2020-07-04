@@ -1,5 +1,7 @@
-import send from '../config/MailConfig'
+import send from '@/config/MailConfig'
 import moment from 'moment'
+import jsonwebtoken from 'jsonwebtoken'
+import config from '@/config'
 
 class LoginController {
   async forget (ctx) {
@@ -20,6 +22,18 @@ class LoginController {
       }
     } catch (e) {
       console.error(e)
+    }
+  }
+
+  async login (ctx) {
+    let token = jsonwebtoken.sign({
+      _id: 'soalin'
+    }, config.JWT_SECRET, {
+      expiresIn: '1d'
+    })
+    ctx.body = {
+      code: 200,
+      token
     }
   }
 }

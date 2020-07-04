@@ -1,9 +1,10 @@
 import redis from 'redis'
+import config from './index'
 
 const options = {
-  host: '127.0.0.1',
-  port: '6379',
-  password: '717900',
+  host: config.REDIS.host,
+  port: config.REDIS.port,
+  password: config.REDIS.password,
   detect_buffers: true,
   retry_strategy: function (options) {
     if (options.error && options.error.code === 'ECONNREFUSED') {

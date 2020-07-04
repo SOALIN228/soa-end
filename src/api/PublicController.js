@@ -14,8 +14,10 @@ class PublicController {
       width: 150,
       height: 38,
     })
-    // 设置图片验证码超时10分钟
-    setValue(body.sid, newCaptcha.text, 10 * 60)
+    if (body.sid) {
+      // 设置图片验证码超时10分钟
+      setValue(body.sid, newCaptcha.text, 10 * 60)
+    }
     ctx.body = {
       code: 200,
       data: newCaptcha.data
