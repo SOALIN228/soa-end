@@ -1,4 +1,4 @@
-import User from './test'
+import User from './User'
 
 const user = {
   name: 'soalin',
