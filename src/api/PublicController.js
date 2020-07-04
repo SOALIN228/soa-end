@@ -12,7 +12,8 @@ class PublicController {
       color: true,
       noise: Math.floor(Math.random() * 5),
       width: 150,
-      height: 38,
+      height: 46,
+      fontSize: 50
     })
     if (body.sid) {
       // 设置图片验证码超时10分钟
