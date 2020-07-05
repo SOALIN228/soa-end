@@ -22,7 +22,7 @@ export default (ctx, next) => {
       }
       // 开发环境打印错误所在行数
       if (process.env.NODE_ENV === 'development') {
-        console.error(err.stack)
+        console.log(err.stack)
       }
     }
   })

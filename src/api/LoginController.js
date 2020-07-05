@@ -24,7 +24,7 @@ class LoginController {
         msg: '邮件发送成功',
       }
     } catch (e) {
-      console.error(e)
+      console.log(e)
     }
   }
 
@@ -37,14 +37,14 @@ class LoginController {
       // 验证用户名密码
       let checkUserPassword = false
       const user = await User.findOne({ username })
-      // if (!user) {
-      //   // 用户信息不存在
-      //   ctx.body = {
-      //     code: 404,
-      //     msg: '用户名不存在'
-      //   }
-      //   return
-      // }
+      if (!user) {
+        // 用户信息不存在
+        ctx.body = {
+          code: 404,
+          msg: '用户名不存在'
+        }
+        return
+      }
       const checkPassword = await bcrypt.compare(password, user.password)
       if (checkPassword) {
         checkUserPassword = true
