@@ -1,5 +1,5 @@
 import svgCaptcha from 'svg-captcha'
-import { getValue, setValue } from '@/config/RedisConfig'
+import { setValue } from '@/config/RedisConfig'
 
 class PublicController {
   // 生成验证码
