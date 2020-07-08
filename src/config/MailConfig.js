@@ -7,20 +7,20 @@ async function send (sendInfo) {
   // let testAccount = await nodemailer.createTestAccount()
 
   // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: 'smtp.qq.com',
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
       user: '741946117@qq.com', // generated ethereal user
-      pass: 'kxwgnrfmstjrbebd', // generated ethereal password
-    },
+      pass: 'kxwgnrfmstjrbebd' // generated ethereal password
+    }
   })
 
-  let url = 'http://www.imooc.com'
+  const url = 'http://www.imooc.com'
 
   // send mail with defined transport object
-  let info = await transporter.sendMail({
+  const info = await transporter.sendMail({
     from: '"认证邮件" <741946117@qq.com>', // sender address
     to: sendInfo.email, // list of receivers
     subject:
@@ -43,10 +43,11 @@ async function send (sendInfo) {
           </div>
           <div style="background: #fafafa; color: #b4b4b4;text-align: center; line-height: 45px; height: 45px; position: absolute; left: 0; bottom: 0;width: 100%;">系统邮件，请勿直接回复</div>
         </div>
-        `, // html body
+        `
   })
 
-  return 'Message sent: %s', info.messageId
+  // 发送结束后返回的信息
+  return `Message sent: %s, ${info.messageId}`
 }
 
 export default send

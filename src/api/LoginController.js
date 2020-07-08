@@ -10,18 +10,18 @@ class LoginController {
   async forget (ctx) {
     const { body } = ctx.request
     try {
-      let result = await send({
+      const result = await send({
         code: '1234',
         expire: moment()
           .add(30, 'minutes')
           .format('YYYY-MM-DD HH:mm:ss'),
         email: body.username,
-        user: 'soalin',
+        user: 'soalin'
       })
       ctx.body = {
         code: 200,
         data: result,
-        msg: '邮件发送成功',
+        msg: '邮件发送成功'
       }
     } catch (e) {
       console.log(e)
@@ -51,7 +51,7 @@ class LoginController {
       }
       if (checkUserPassword) {
         // 验证通过，返回token
-        let token = jsonwebtoken.sign({
+        const token = jsonwebtoken.sign({
           _id: username
         }, config.JWT_SECRET, {
           expiresIn: '1d'
@@ -81,16 +81,16 @@ class LoginController {
     const { username, name, password, sid, code } = body
     const msg = {}
     // 图像验证码是否有效
-    let result = await checkCode(sid, code)
+    const result = await checkCode(sid, code)
     let check = true
     if (result) {
       // 查库，看username是否被注册
-      let user1 = await User.findOne({ username })
+      const user1 = await User.findOne({ username })
       if (user1 !== null && typeof user1.username !== 'undefined') {
         msg.username = ['此邮箱已经注册，可以通过邮箱找回密码']
         check = false
       }
-      let user2 = await User.findOne({ name })
+      const user2 = await User.findOne({ name })
       // 查库，看name是否被注册
       if (user2 !== null && typeof user2.name !== 'undefined') {
         msg.name = ['此昵称已经被注册，请修改']
@@ -100,13 +100,13 @@ class LoginController {
       if (check) {
         // 密码加密
         const handlePassword = await bcrypt.hash(password, 5)
-        let user = new User({
+        const user = new User({
           username,
           name,
           password: handlePassword,
           created: moment().format('YYYY-MM-DD HH:mm:ss')
         })
-        let result = await user.save()
+        const result = await user.save()
         ctx.body = {
           code: 200,
           data: result,

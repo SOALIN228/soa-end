@@ -1,16 +1,20 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'es2020': true,
-    'node': true
+  env: {
+    browser: true,
+    es6: true,
+    node: true
   },
-  'extends': 'eslint:recommended',
-  'parserOptions': {
-    'ecmaVersion': 11,
-    'sourceType': 'module'
+  extends: ['eslint:recommended', 'standard'],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly'
   },
-  'rules': {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+  parserOptions: {
+    ecmaVersion: 11,
+    sourceType: 'module'
+  },
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'require-atomic-updates': 'off'
   }
