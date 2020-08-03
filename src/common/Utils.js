@@ -6,6 +6,11 @@
  */
 import { getValue } from '@/config/RedisConfig'
 
+/**
+ * 验证码校验
+ * @param key
+ * @param value
+ */
 const checkCode = async (key, value) => {
   const redisData = await getValue(key)
   if (redisData !== null) {

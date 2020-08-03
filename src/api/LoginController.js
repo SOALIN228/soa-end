@@ -7,6 +7,10 @@ import { checkCode } from '@/common/Utils'
 import User from '@/model/User'
 
 class LoginController {
+  /**
+   * 邮箱找回密码
+   * @param ctx
+   */
   async forget (ctx) {
     const { body } = ctx.request
     try {
@@ -28,6 +32,10 @@ class LoginController {
     }
   }
 
+  /**
+   * 登录
+   * @param ctx
+   */
   async login (ctx) {
     const { body } = ctx.request
     const { username, password, sid, code } = body
@@ -76,6 +84,10 @@ class LoginController {
     }
   }
 
+  /**
+   * 注册
+   * @param ctx
+   */
   async reg (ctx) {
     const { body } = ctx.request
     const { username, name, password, sid, code } = body

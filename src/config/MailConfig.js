@@ -12,17 +12,18 @@ async function send (sendInfo) {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: '741946117@qq.com', // generated ethereal user
-      pass: 'kxwgnrfmstjrbebd' // generated ethereal password
+      user: '741946117@qq.com', // generated ethereal user（发件人的邮箱）
+      pass: 'kxwgnrfmstjrbebd' // generated ethereal password（认证后的授权码，安全机制）
     }
   })
 
+  // 重置密码链接
   const url = 'http://www.imooc.com'
 
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: '"认证邮件" <741946117@qq.com>', // sender address
-    to: sendInfo.email, // list of receivers
+    from: '"认证邮件" <741946117@qq.com>', // sender address(发件人信息)
+    to: sendInfo.email, // list of receivers(收件人信息)
     subject:
       sendInfo.user !== ''
         ? `你好开发者，${sendInfo.user}！《慕课网前端全栈实践》注册码`
