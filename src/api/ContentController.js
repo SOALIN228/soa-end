@@ -36,7 +36,6 @@ class ContentController {
       // mongoose的嵌套查询方法，$elemMatch: 查询某个对象数组中，对象的属性 name
       options.tags = { $elemMatch: { name: body.tag } }
     }
-    console.log(options)
     const result = await Post.getList(options, sort, page, limit)
     ctx.body = {
       code: 200,
