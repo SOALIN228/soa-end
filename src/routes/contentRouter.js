@@ -4,10 +4,10 @@
  * Time: 22:34
  * Desc:
  */
-import Router from 'koa-router'
+import Router from 'koa-router';
 
-const router = new Router()
+const router = new Router();
 
-router.prefix('/content')
+router.prefix('/content');
 
-export default router
+export default router;

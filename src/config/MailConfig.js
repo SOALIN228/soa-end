@@ -1,7 +1,7 @@
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
 
 // async..await is not allowed in global scope, must use a wrapper
-async function send (sendInfo) {
+async function send(sendInfo) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   // let testAccount = await nodemailer.createTestAccount()
@@ -13,12 +13,12 @@ async function send (sendInfo) {
     secure: false, // true for 465, false for other ports
     auth: {
       user: '741946117@qq.com', // generated ethereal user（发件人的邮箱）
-      pass: 'kxwgnrfmstjrbebd' // generated ethereal password（认证后的授权码，安全机制）
-    }
-  })
+      pass: 'kxwgnrfmstjrbebd', // generated ethereal password（认证后的授权码，安全机制）
+    },
+  });
 
   // 重置密码链接
-  const url = 'http://www.imooc.com'
+  const url = 'http://www.imooc.com';
 
   // send mail with defined transport object
   const info = await transporter.sendMail({
@@ -44,11 +44,11 @@ async function send (sendInfo) {
           </div>
           <div style="background: #fafafa; color: #b4b4b4;text-align: center; line-height: 45px; height: 45px; position: absolute; left: 0; bottom: 0;width: 100%;">系统邮件，请勿直接回复</div>
         </div>
-        `
-  })
+        `,
+  });
 
   // 发送结束后返回的信息
-  return `Message sent: %s, ${info.messageId}`
+  return `Message sent: %s, ${info.messageId}`;
 }
 
-export default send
+export default send;

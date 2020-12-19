@@ -1,6 +1,6 @@
-const webpackMerge = require('webpack-merge')
-const commonWebpackConfig = require('./webpack.common')
-const TerserWebpackPlugin = require('terser-webpack-plugin')
+const webpackMerge = require('webpack-merge');
+const commonWebpackConfig = require('./webpack.common');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
 
 const webpackConfig = webpackMerge(commonWebpackConfig, {
   mode: 'production',
@@ -27,7 +27,7 @@ const webpackConfig = webpackMerge(commonWebpackConfig, {
         },
         parallel: true,
         sourceMap: false,
-      })
+      }),
     ],
     splitChunks: {
       cacheGroups: {
@@ -35,11 +35,11 @@ const webpackConfig = webpackMerge(commonWebpackConfig, {
           name: 'commons',
           chunks: 'initial',
           minChunks: 3,
-          enforce: true
-        }
-      }
-    }
-  }
-})
+          enforce: true,
+        },
+      },
+    },
+  },
+});
 
-module.exports = webpackConfig
+module.exports = webpackConfig;

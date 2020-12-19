@@ -4,9 +4,9 @@
  * Time: 08:06
  * Desc: 友链相关module
  */
-import mongoose from '../config/DBHelpler'
+import mongoose from '../config/DBHelpler';
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const LinksSchema = new Schema({
   title: { type: String, default: '' },
@@ -14,15 +14,15 @@ const LinksSchema = new Schema({
   type: { type: String, default: 'link' },
   created: { type: Date },
   isTop: { type: String, default: '0' },
-  sort: { type: String, default: '0' }
-})
+  sort: { type: String, default: '0' },
+});
 
 // 定义保存前的钩子函数，用于保存创建时间，中间件
 LinksSchema.pre('save', function (next) {
-  this.created = new Date() // 设置为Date类型，返回给前端，前端在进行格式化
-  next()
-})
+  this.created = new Date(); // 设置为Date类型，返回给前端，前端在进行格式化
+  next();
+});
 
-const LinksModel = mongoose.model('links', LinksSchema)
+const LinksModel = mongoose.model('links', LinksSchema);
 
-export default LinksModel
+export default LinksModel;

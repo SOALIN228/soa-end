@@ -4,7 +4,7 @@
  * Time: 16:33
  * Desc: 接口通用方法
  */
-import { getValue } from '@/config/RedisConfig'
+import { getValue } from '@/config/RedisConfig';
 
 /**
  * 验证码校验
@@ -12,14 +12,12 @@ import { getValue } from '@/config/RedisConfig'
  * @param value
  */
 const checkCode = async (key, value) => {
-  const redisData = await getValue(key)
+  const redisData = await getValue(key);
   if (redisData !== null) {
-    return redisData.toLowerCase() === value.toLowerCase()
+    return redisData.toLowerCase() === value.toLowerCase();
   } else {
-    return false
+    return false;
   }
-}
+};
 
-export {
-  checkCode
-}
+export { checkCode };

@@ -4,13 +4,11 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
-    "dev": "npm-run-all -p watch debug",
+    "start": "npm-run-all -p watch debug",
     "build": "cross-env NODE_ENV=prod webpack --config config/webpack.prod.js",
     "watch": "cross-env NODE_ENV=dev webpack --watch --progress --hide-modules --config config/webpack.dev.js",
     "debug": "nodemon --inspect dist/server.bundle.js",
-    "webpack:debug": "node --inspect-brk ./node_modules/.bin/webpack --inline --progress",
-    "clean": "rimraf dist"
+    "webpack:debug": "node --inspect-brk ./node_modules/.bin/webpack --inline --progress"
   },
   "repository": {
     "type": "git",
@@ -53,14 +51,14 @@
     "clean-webpack-plugin": "^3.0.0",
     "cross-env": "^7.0.2",
     "eslint": "^7.4.0",
-    "eslint-config-standard": "^14.1.1",
+    "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^2.0.4",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^3.0.2",
+    "prettier": "^2.2.1",
     "terser-webpack-plugin": "^3.0.6",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
