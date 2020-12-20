@@ -6,39 +6,38 @@ const options = {
   host: config.REDIS.host,
   port: config.REDIS.port,
   password: config.REDIS.password,
-  detect_buffers: true, // 设置为true，处理数据完后，返回buffer，为不是转化为string
+  detect_buffers: true, // 设置为true，处理数据完后，返回buffer，而不是返回string
   retry_strategy: function (options) {
     if (options.error && options.error.code === 'ECONNREFUSED') {
-      // End reconnecting on a specific error and flush all commands with
-      // a individual error
+      // 服务器连接错误
       return new Error('The server refused the connection');
     }
     if (options.total_retry_time > 1000 * 60 * 60) {
-      // End reconnecting after a specific timeout and flush all commands
-      // with a individual error
+      // 服务器连接超时
       return new Error('Retry time exhausted');
     }
     if (options.attempt > 10) {
-      // End reconnecting with built in error
+      // 服务器连接次数大于10次
       return undefined;
     }
-    // reconnect after
+    // 每次重连时间
     return Math.min(options.attempt * 100, 3000);
   },
 };
 
+// 使用promisifyAll会在原有库上额外添加带有原有方法名+Async的promise方法
 const client = promisifyAll(redis.createClient(options));
 
 // 监听client 连接出错的情况
 client.on('error', (err) => {
-  console.log('redis client error:' + err);
+  console.log('redis client error: ' + err);
 });
 
 /**
- * 设置key 过期时间
+ * 设置key
  * @param key
  * @param value
- * @param time
+ * @param time 过期时间
  */
 const setValue = (key, value, time) => {
   if (typeof value === 'undefined' || value === null || value === '') {
@@ -46,22 +45,20 @@ const setValue = (key, value, time) => {
   }
   if (typeof value === 'string') {
     if (typeof time !== 'undefined') {
-      client.set(key, value, 'EX', time);
+      client.set(key, value, 'EX', time, redis.print);
     } else {
-      client.set(key, value);
+      client.set(key, value, redis.print);
     }
   } else if (typeof value === 'object') {
+    // key的value为对象
     Object.keys(value).forEach((item) => {
       client.hset(key, item, value[item], redis.print);
     });
   }
 };
 
-// const {promisify} = require('util');
-// const getAsync = promisify(client.get).bind(client);
-
 /**
- * 获取key
+ * 获取String key
  * @param key
  */
 const getValue = (key) => {
@@ -69,14 +66,10 @@ const getValue = (key) => {
 };
 
 /**
- * 获取使用hset 设置的key
+ * 获取Hash hset key
  * @param key
  */
 const getHValue = (key) => {
-  // v8 Promisify method use util, must node > 8
-  // return promisify(client.hgetall).bind(client)(key)
-
-  // bluebird async
   return client.hgetallAsync(key);
 };
 

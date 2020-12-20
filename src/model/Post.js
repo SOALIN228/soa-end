@@ -5,7 +5,7 @@
  * Desc: 发帖记录module
  */
 import mongoose from '../config/DBHelpler';
-import moment from 'dayjs';
+import dayjs from 'dayjs';
 
 const Schema = mongoose.Schema;
 
@@ -61,7 +61,7 @@ PostSchema.statics = {
         created: {
           // 根据创建时间来筛选
           // 近7天内的数据（大于等于现在时间-7天的时间内的文章）
-          $gte: moment().subtract(7, 'days'),
+          $gte: dayjs().subtract(7, 'days'),
         },
       },
       {

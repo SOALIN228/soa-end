@@ -1,5 +1,5 @@
 import send from '@/config/MailConfig';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import bcrypt from 'bcrypt';
 import jsonwebtoken from 'jsonwebtoken';
 import config from '@/config';
@@ -16,7 +16,7 @@ class LoginController {
     try {
       const result = await send({
         code: '1234',
-        expire: moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
+        expire: dayjs().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
         email: body.username,
         user: 'soalin',
       });
@@ -118,7 +118,7 @@ class LoginController {
           username,
           name,
           password: handlePassword,
-          created: moment().format('YYYY-MM-DD HH:mm:ss'),
+          created: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         });
         const result = await user.save();
         ctx.body = {

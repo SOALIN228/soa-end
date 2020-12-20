@@ -5,7 +5,7 @@
  * Desc: 用户信息module
  */
 import mongoose from '../config/DBHelpler';
-import moment from 'dayjs';
+import dayjs from 'dayjs';
 
 const Schema = mongoose.Schema;
 
@@ -29,12 +29,12 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre('save', function (next) {
-  this.created = moment().format('YYYY-MM-DD HH:mm:ss');
+  this.created = dayjs().format('YYYY-MM-DD HH:mm:ss');
   next();
 });
 
 UserSchema.pre('update', function (next) {
-  this.updated = moment().format('YYYY-MM-DD HH:mm:ss');
+  this.updated = dayjs().format('YYYY-MM-DD HH:mm:ss');
   next();
 });
 
