@@ -15,8 +15,9 @@ import errorHandle from './common/ErrorHandle';
 const app = new Koa();
 const isDevMode = process.env.NODE_ENV !== 'production';
 
-// 定义公共路径，不需要jwt鉴权
+// 根据secret验证token，更安全的方法是使用动态secret
 const jwt = JWT({ secret: config.JWT_SECRET }).unless({
+  // 定义公共路径，不需要jwt鉴权
   path: [/^\/public/, /\/login/],
 });
 

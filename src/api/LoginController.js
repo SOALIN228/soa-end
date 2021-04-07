@@ -51,12 +51,13 @@ class LoginController {
         };
         return;
       }
+      // 和数据库解密后的密码进行比较
       const checkPassword = await bcrypt.compare(password, user.password);
       if (checkPassword) {
         checkUserPassword = true;
       }
       if (checkUserPassword) {
-        // 验证通过，返回token
+        // 根据secret和用户信息生成token
         const token = jsonwebtoken.sign(
           {
             _id: username,
@@ -70,20 +71,20 @@ class LoginController {
           code: 200,
           token,
         };
-      } else {
-        // 用户名或密码验证失败
-        ctx.body = {
-          code: 404,
-          msg: '用户名或密码错误',
-        };
+        return;
       }
-    } else {
-      // 图片验证码验证失败
+      // 用户名或密码验证失败
       ctx.body = {
-        code: 401,
-        msg: '图片验证码不正确，请检查！',
+        code: 404,
+        msg: '用户名或密码错误',
       };
+      return;
     }
+    // 图片验证码验证失败
+    ctx.body = {
+      code: 401,
+      msg: '图片验证码不正确，请检查！',
+    };
   }
 
   /**
@@ -96,41 +97,45 @@ class LoginController {
     const msg = {};
     // 图像验证码是否有效
     const result = await checkCode(sid, code);
-    let check = true;
     if (result) {
       // 查库，看username是否被注册
       const user1 = await User.findOne({ username });
-      if (user1 !== null && typeof user1.username !== 'undefined') {
-        msg.username = ['此邮箱已经注册，可以通过邮箱找回密码'];
-        check = false;
-      }
-      const user2 = await User.findOne({ name });
-      // 查库，看name是否被注册
-      if (user2 !== null && typeof user2.name !== 'undefined') {
-        msg.name = ['此昵称已经被注册，请修改'];
-        check = false;
-      }
-      // 写入数据到数据库
-      if (check) {
-        // 密码加密
-        const handlePassword = await bcrypt.hash(password, 5);
-        const user = new User({
-          username,
-          name,
-          password: handlePassword,
-          created: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-        });
-        const result = await user.save();
+      if (user1) {
+        msg.username = '此邮箱已经注册，可以通过邮箱找回密码';
         ctx.body = {
-          code: 200,
-          data: result,
-          msg: '注册成功',
+          code: 500,
+          msg: msg,
         };
         return;
       }
-    } else {
-      msg.code = ['验证码输入错误！'];
+      const user2 = await User.findOne({ name });
+      // 查库，看name是否被注册
+      if (user2) {
+        msg.name = '此昵称已经被注册，请修改';
+        ctx.body = {
+          code: 500,
+          msg: msg,
+        };
+        return;
+      }
+      // 验证通过，写入数据到数据库
+      // 密码加密
+      const handlePassword = await bcrypt.hash(password, 5);
+      const user = new User({
+        username,
+        name,
+        password: handlePassword,
+        created: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      });
+      const result = await user.save();
+      ctx.body = {
+        code: 200,
+        data: result,
+        msg: '注册成功',
+      };
+      return;
     }
+    msg.code = '验证码输入错误！';
     ctx.body = {
       code: 500,
       msg: msg,

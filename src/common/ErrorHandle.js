@@ -13,17 +13,17 @@ export default (ctx, next) => {
         code: 401,
         msg: 'Protected resource, use Authorization header to get access\n',
       };
-    } else {
-      // 错误异常处理
-      ctx.status = err.status || 500;
-      ctx.body = {
-        code: 500,
-        msg: err.message,
-      };
-      // 开发环境打印错误所在行数
-      if (process.env.NODE_ENV === 'development') {
-        console.log(err.stack);
-      }
+      return;
+    }
+    // 通用异常处理
+    ctx.status = err.status || 500;
+    ctx.body = {
+      code: 500,
+      msg: err.message,
+    };
+    // 开发环境打印错误所在行数
+    if (process.env.NODE_ENV === 'development') {
+      console.log(err.stack);
     }
   });
 };

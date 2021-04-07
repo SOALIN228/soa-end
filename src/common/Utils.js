@@ -12,12 +12,12 @@ import { getValue } from '@/config/RedisConfig';
  * @param value
  */
 const checkCode = async (key, value) => {
+  if (!key || !value) return false;
   const redisData = await getValue(key);
-  if (redisData !== null) {
+  if (redisData) {
     return redisData.toLowerCase() === value.toLowerCase();
-  } else {
-    return false;
   }
+  return false;
 };
 
 export { checkCode };

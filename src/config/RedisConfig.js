@@ -46,10 +46,12 @@ const setValue = (key, value, time) => {
   if (typeof value === 'string') {
     if (typeof time !== 'undefined') {
       client.set(key, value, 'EX', time, redis.print);
-    } else {
-      client.set(key, value, redis.print);
+      return;
     }
-  } else if (typeof value === 'object') {
+    client.set(key, value, redis.print);
+    return;
+  }
+  if (typeof value === 'object') {
     // key的value为对象
     Object.keys(value).forEach((item) => {
       client.hset(key, item, value[item], redis.print);
@@ -81,9 +83,8 @@ const delValue = (key) => {
   client.del(key, (err, res) => {
     if (res === 1) {
       console.log('delete successfully');
-    } else {
-      console.log('delete redis key error:' + err);
     }
+    console.log('delete redis key error:' + err);
   });
 };
 
