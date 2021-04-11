@@ -10,12 +10,13 @@ import dayjs from 'dayjs';
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
+  // ref关联users表
   uid: { type: String, ref: 'users' },
-  title: String,
-  content: String,
-  created: Date,
-  catalog: String,
-  fav: String,
+  title: { type: String },
+  content: { type: String },
+  created: { type: Date },
+  catalog: { type: String },
+  fav: { type: String },
   isEnd: { type: String, default: '0' },
   reads: { type: Number, default: 0 },
   answer: { type: Number, default: 0 },
@@ -47,20 +48,19 @@ PostSchema.statics = {
       .skip(page * limit) // 跳过多少页数据
       .limit(limit) // 获取多少条数据
       .populate({
-        // 过滤筛选（排除一些不必要的字段，或者是敏感字段）
+        // 联合查询根据path，过滤筛选需要的字段（排除一些不必要的字段，或者是敏感字段）
         path: 'uid', // 指定过滤筛选字段
         select: 'name isVip pic', // 从相应的数据中拿到相应的字段，填充到过滤字段下
       });
   },
   /**
-   * 获取本周的数据
+   * 获取本周热议数据
    */
-  getTopWeek: function () {
+  getTopWeek() {
     return this.find(
       {
         created: {
-          // 根据创建时间来筛选
-          // 近7天内的数据（大于等于现在时间-7天的时间内的文章）
+          // 根据创建时间来筛选最近7天内的数据（大于等于现在时间-7天的时间内的文章）
           $gte: dayjs().subtract(7, 'days'),
         },
       },

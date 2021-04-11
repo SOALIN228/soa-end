@@ -7,7 +7,7 @@ class PublicController {
     // 获取参数
     const body = ctx.request.query;
     const newCaptcha = svgCaptcha.create({
-      size: 6,
+      size: 4,
       ignoreChars: '0Oo1il',
       color: true,
       noise: Math.floor(Math.random() * 5),

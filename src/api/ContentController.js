@@ -20,20 +20,20 @@ class ContentController {
     const limit = body.limit ? parseInt(body.limit) : 20;
     const options = {};
 
-    if (typeof body.catalog !== 'undefined' && body.catalog !== '') {
+    if (body.catalog) {
       options.catalog = body.catalog;
     }
-    if (typeof body.isTop !== 'undefined' && body.isTop !== '') {
+    if (body.isTop) {
       options.isTop = body.isTop;
     }
-    if (typeof body.status !== 'undefined' && body.status !== '') {
+    if (body.status) {
       options.status = body.status;
     }
-    if (typeof body.isEnd !== 'undefined' && body.isEnd !== '') {
+    if (body.isEnd) {
       options.isEnd = body.isEnd;
     }
-    if (typeof body.tag !== 'undefined' && body.tag !== '') {
-      // mongoose的嵌套查询方法，$elemMatch: 查询某个对象数组中，对象的属性 name
+    if (body.tag) {
+      // mongoose的嵌套查询方法，$elemMatch: 查询某个对象数组中，name为body.tag的数据
       options.tags = { $elemMatch: { name: body.tag } };
     }
     const result = await Post.getList(options, sort, page, limit);

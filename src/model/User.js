@@ -5,7 +5,6 @@
  * Desc: 用户信息module
  */
 import mongoose from '../config/DBHelpler';
-import dayjs from 'dayjs';
 
 const Schema = mongoose.Schema;
 
@@ -14,13 +13,13 @@ const UserSchema = new Schema({
   username: { type: String, index: { unique: true }, sparse: true },
   password: { type: String },
   name: { type: String },
-  create: { type: Date },
-  update: { type: Date },
+  created: { type: Date },
+  updated: { type: Date },
   favs: { type: Number, default: 100 },
   gender: { type: String, default: '' },
   roles: { type: Array, default: ['user'] },
   pic: { type: String, default: '/img/header.png' }, // 入口文件设置了静态资源目录， / 代表public目录
-  mobile: { type: String, match: /^1[3-9](\d{9})$/, default: '' }, // match 正则
+  mobile: { type: String, match: /^1[3-9](\d{9})$/, default: '' }, // 插入值满足match设置正则才能插入成功
   status: { type: String, default: '0' },
   regmark: { type: String, default: '' },
   location: { type: String, default: '' },
@@ -29,12 +28,12 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre('save', function (next) {
-  this.created = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  this.created = new Date();
   next();
 });
 
 UserSchema.pre('update', function (next) {
-  this.updated = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  this.updated = new Date();
   next();
 });
 

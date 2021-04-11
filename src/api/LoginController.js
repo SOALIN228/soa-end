@@ -125,7 +125,6 @@ class LoginController {
         username,
         name,
         password: handlePassword,
-        created: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       });
       const result = await user.save();
       ctx.body = {
@@ -138,7 +137,7 @@ class LoginController {
     msg.code = '验证码输入错误！';
     ctx.body = {
       code: 500,
-      msg: msg,
+      msg,
     };
   }
 }

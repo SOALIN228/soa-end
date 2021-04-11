@@ -11,10 +11,10 @@ const Schema = mongoose.Schema;
 const LinksSchema = new Schema({
   title: { type: String, default: '' },
   link: { type: String, default: '' },
-  type: { type: String, default: 'link' },
+  type: { type: String, default: '' },
   created: { type: Date },
-  isTop: { type: String, default: '0' },
-  sort: { type: String, default: '0' },
+  isTop: { type: String, default: '' },
+  sort: { type: String, default: '' },
 });
 
 // 定义保存前的钩子函数，用于保存创建时间，中间件

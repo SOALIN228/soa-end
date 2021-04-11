@@ -5,7 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "start": "npm-run-all -p watch debug",
-    "build": "cross-env NODE_ENV=prod webpack --config config/webpack.prod.js",
+    "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
+    "build:dev": "cross-env NODE_ENV=development webpack --config config/webpack.config.prod.js",
+    "lint": "eslint src/ --ext .js --fix",
     "watch": "cross-env NODE_ENV=dev webpack --watch --progress --hide-modules --config config/webpack.dev.js",
     "debug": "nodemon --inspect dist/server.bundle.js",
     "webpack:debug": "node --inspect-brk ./node_modules/.bin/webpack --inline --progress"
