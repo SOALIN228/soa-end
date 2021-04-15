@@ -57,6 +57,12 @@ class LoginController {
         checkUserPassword = true;
       }
       if (checkUserPassword) {
+        // 过滤掉敏感信息，用于前端展示
+        const userObj = user.toJSON();
+        const arr = ['password', 'username'];
+        arr.map((item) => {
+          delete userObj[item];
+        });
         // 根据secret和用户信息生成token
         const token = jsonwebtoken.sign(
           {
@@ -69,6 +75,7 @@ class LoginController {
         );
         ctx.body = {
           code: 200,
+          data: userObj,
           token,
         };
         return;
