@@ -41,7 +41,7 @@
     "koa-static": "^5.0.0",
     "mongoose": "^5.9.21",
     "nodemailer": "^6.4.10",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "svg-captcha": "^1.4.0"
   },
   "devDependencies": {
